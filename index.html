@@ -2,17 +2,17 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Weekday Text Display</title>
+<title>Timetable Display</title>
 <style>
   body {
     margin: 0;
-    background: white;
-    color: black;
+    background: black;
+    color: white;
     display: flex;
     align-items: center;
     justify-content: center;
     height: 100vh;
-    font-size: 72px;
+    font-size: 72px;  /* 文字サイズはここで調整 */
     text-align: center;
   }
 </style>
@@ -22,24 +22,73 @@
 <div id="view"></div>
 
 <script>
-// 曜日番号を取得（0=日曜, 1=月曜, ... , 6=土曜）
-const day = new Date().getDay();
+// 今の日時を取得（見る端末の時計が使われます）
+const now  = new Date();
+const day  = now.getDay();   // 0=日,1=月,2=火,3=水,4=木,5=金,6=土
+const hour = now.getHours(); // 0〜23 の整数（例: 8時台→8, 15時台→15）
 
-// 各曜日のテキストを設定
-const messages = {
-  0: "日曜日のメッセージ",
-  1: "月曜日のメッセージ",
-  2: "火曜日のメッセージ",
-  3: "水曜日のメッセージ",
-  4: "木曜日のメッセージ",
-  5: "金曜日のメッセージ",
-  6: "土曜日のメッセージ"
+// ===== ここに時間割を書く =====
+// 曜日ごと（キー: 1〜5 が 月〜金）
+// その中に「何時台か」（キー: 8, 9, 10…）を指定して、表示したい文字を書く
+//
+// 例：月曜 8時台は「1限: 国語」、9時台は「2限: 数学」など
+const timetable = {
+  1: { // 月曜日
+    8: "月曜 1限：国語",
+    9: "月曜 2限：数学",
+    10: "月曜 3限：英語",
+    11: "月曜 4限：理科",
+    13: "月曜 5限：社会",
+    14: "月曜 6限：情報"
+  },
+  2: { // 火曜日
+    8: "火曜 1限：英語",
+    9: "火曜 2限：数学",
+    10: "火曜 3限：国語",
+    11: "火曜 4限：体育",
+    13: "火曜 5限：理科",
+    14: "火曜 6限：総合"
+  },
+  3: { // 水曜日
+    8: "水曜 1限：○○",
+    9: "水曜 2限：○○",
+    10: "水曜 3限：○○",
+    11: "水曜 4限：○○",
+    13: "水曜 5限：○○",
+    14: "水曜 6限：○○"
+  },
+  4: { // 木曜日
+    8: "木曜 1限：○○",
+    9: "木曜 2限：○○",
+    10: "木曜 3限：○○",
+    11: "木曜 4限：○○",
+    13: "木曜 5限：○○",
+    14: "木曜 6限：○○"
+  },
+  5: { // 金曜日
+    8: "金曜 1限：○○",
+    9: "金曜 2限：○○",
+    10: "金曜 3限：○○",
+    11: "金曜 4限：○○",
+    13: "金曜 5限：○○",
+    14: "金曜 6限：○○"
+  }
+  // 必要なら 0: {}（日曜）, 6: {}（土曜）も追加
 };
+// ===== ここまで時間割 =====
 
-// 対応するメッセージを表示
-document.getElementById("view").textContent = messages[day];
+let message = "";
+
+// 該当する曜日・時刻のコマがあればその内容を表示
+if (timetable[day] && timetable[day][hour] !== undefined) {
+  message = timetable[day][hour];
+} else {
+  // 授業がない時間や、設定していない曜日/時間のとき
+  message = "今は授業時間外です";
+}
+
+document.getElementById("view").textContent = message;
 </script>
 
 </body>
 </html>
-

@@ -1,8 +1,8 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Fixed Text Display</title>
+<title>Weekday Text Display</title>
 <style>
   body {
     margin: 0;
@@ -19,13 +19,26 @@
 </head>
 <body>
 
-<div id="view">
-一時間目数学<br>
-二時間目体育<br>
-三時間目プログラミング技術</div>
+<div id="view"></div>
+
+<script>
+// 曜日番号を取得（0=日曜, 1=月曜, ... , 6=土曜）
+const day = new Date().getDay();
+
+// 各曜日のテキストを設定
+const messages = {
+  0: "日曜日のメッセージ",
+  1: "月曜日のメッセージ",
+  2: "火曜日のメッセージ",
+  3: "水曜日のメッセージ",
+  4: "木曜日のメッセージ",
+  5: "金曜日のメッセージ",
+  6: "土曜日のメッセージ"
+};
+
+// 対応するメッセージを表示
+document.getElementById("view").textContent = messages[day];
+</script>
 
 </body>
 </html>
-
-
-

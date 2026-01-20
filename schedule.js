@@ -85,4 +85,11 @@
   }
 
   document.getElementById("view").textContent = message;
+  const debug =
+  "day=" + day + " hour=" + hour + " min=" + minute + "<br>" +
+  "total=" + total + "<br>" +
+  "period=" + period + "<br>" +
+  "lunch=" + isLunchBreak;
+
+document.getElementById("view").innerHTML = message + "<br><br><small>" + debug + "</small>";
 })();
